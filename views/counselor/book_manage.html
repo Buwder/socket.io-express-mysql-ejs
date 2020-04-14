@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>心理咨询平台</title>
+    <link href="/counselor/css/consult-base.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/util/js/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $("#book_manage").addClass("menu-active");
+        })
+
+        /*修改预约设置*/
+        function open_edit_book_layer(){
+            $("#edit-layer").show();
+            $("#consult_bg").show();
+
+            $.ajax({
+                async: false,
+                url:'/counselor/work/find_book_info',
+                type:'post',
+                data:{},
+                dataType:'json',
+                success:function(result){
+                    var findBookInfo=result.findBookInfo;
+                    $("#work_time_interval").val(findBookInfo.work_time_interval)
+                    $("#appointment_max_num").val(findBookInfo.appointment_max_num)
+                }
+            });
+        }
+        /*修改预约设置*/
+        function close_edit_book_layer(){
+            $("#edit-layer").hide();
+            $("#consult_bg").hide();
+        }
+        /*修改预约设置*/
+        function submit_edit_book_layer(){
+            var work_time_interval=$("#work_time_interval").val();
+            var appointment_max_num=$("#appointment_max_num").val();
+
+            $.ajax({
+                async: false,
+                url:'/counselor/work/update_book_info',
+                type:'post',
+                data:{work_time_interval:work_time_interval,appointment_max_num:appointment_max_num},
+                dataType:'json',
+                success:function(result){
+                    window.location.reload();
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <%include header.html%>
+
+    <div class="message-modular">
+        <div class="message-title">
+            <a class="edit-icon" href="javascript:open_edit_book_layer()">修改预约设置</a>
+            <h1><span>预约管理</span></h1>
+        </div><!--message-title-->
+        <div class="record-all">
+            <table class="record-list" border="0" cellspacing="0" cellpadding="0">
+                <thead>
+                <tr>
+                    <th>预约日期</th>
+                    <th>限制总人数</th>
+                    <th>已预约人数</th>
+                    <th>实际赴约人数</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% for(var index in bookManageList){ %>
+                    <tr>
+                        <td><%=bookManageList[index].appointment_date%></td>
+                        <td><%=bookManageList[index].appointment_max_num%></td>
+                        <td><%=bookManageList[index].appointment_number%></td>
+                        <td><%=bookManageList[index].keep_number%></td>
+                    </tr>
+                <%}%>
+                </tbody>
+            </table>
+
+            <div class="page_all">
+                <div class="page">
+                    <ul>
+                        <li>
+                            <a href="/counselor/work/book_manage?curentpage=<%=parseInt(page.curentpage)-1%>"><span class="arrow_left"></span></a>
+                        </li>
+                        <% for(var index=0;index<page.pageNumber;index++){ %>
+                        <li <% if(page.curentpage==index){ %>class="page_active"<% } %> >
+                        <a href="/counselor/work/book_manage?curentpage=<%=index%>"><%=index+1%></a>
+                        </li>
+                        <% } %>
+                        <li>
+                            <a href="/counselor/work/book_manage?curentpage=<%=parseInt(page.curentpage)+1%>"><span class="arrow_right"></span></a>
+                        </li>
+                        <div class="clr"></div>
+                    </ul>
+                </div>
+                <div class="clr"></div>
+            </div><!--page-all-->
+
+        </div><!--record-all-->
+    </div><!--chat-modular-->
+
+    <%include footer.html%>
+
+    <div class="edit-layer" id="edit-layer" style="display: none;">
+        <div class="edit-top">
+            <a class="close-icon" href="javascript:close_edit_book_layer()"></a>
+            <h1>温馨提示</h1>
+        </div>
+        <div class="edit-index">
+            <ul>
+                <li>
+                    <label>工作时间：</label>
+                    <input type="text" id="work_time_interval"/>
+                </li>
+                <li>
+                    <label>限制总人数：</label>
+                    <input type="text" id="appointment_max_num"/>
+                </li>
+            </ul>
+        </div><!--edit-index-->
+        <div class="layer-btn">
+            <a href="javascript:submit_edit_book_layer()">确定</a>
+            <a class="layer-cancel" href="javascript:close_edit_book_layer()">取消</a>
+        </div>
+    </div><!--edit-layer-->
+    <div class="consult_bg" id="consult_bg" style="display: none;"></div>
+
+</body>
+</html>

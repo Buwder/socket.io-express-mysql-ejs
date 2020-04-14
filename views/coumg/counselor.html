@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>心理咨询平台</title>
+    <link href="/coumg/css/consult-mp.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/util/js/jquery.min.js"></script>
+    <script type="text/javascript">
+        <!-- 退出平台-->
+        function loginOut(){
+            location.href="/coumg/loginOut";
+        }
+    </script>
+</head>
+<body>
+    <div class="top-infor">
+        <div class="top-infor-link">
+            <a href="javascript:loginOut();" class="logout">退出平台</a>
+            <span>欢迎您：<%=admin.adminName%></span>
+        </div>
+    </div><!--top_infor-->
+    <div class="heard-all">
+        <div class="heard-index">
+            <ul class="menu">
+                <li>
+                    <a href="#">
+                        <span class="consul-icon"></span>
+                        <p><%=admin.adminName%></p>
+                    </a>
+                </li>
+            </ul>
+
+            <a class="home-logo" href="/coumg/counselor">
+                <img src="/coumg/images/logo.png" />
+            </a>
+        </div>
+    </div><!--heard-all-->
+
+    <div class="consultant-all">
+        <div class="consultant-top">
+            <a class="new-consultant" href="/coumg/toCreateCounselor">创建咨询师</a>
+            <h1>咨询师</h1>
+        </div><!--consultant-top-->
+        <div class="consultant-center">
+            <table class="consultant-list" border="0" cellspacing="0" cellpadding="0">
+                <thead>
+                <tr>
+                    <th>姓名</th>
+                    <th>性别</th>
+                    <th>年龄</th>
+                    <th>咨询次数</th>
+                    <th>在线状态</th>
+                    <th width="260">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% for(var index in counselorList){ %>
+                    <tr>
+                        <td><%=counselorList[index].counselor_name%></td>
+                        <td><% if(counselorList[index].sex=='MALE'){ %>男<% }else{ %>女<% } %></td>
+                        <td><%=counselorList[index].age%></td>
+                        <td><% if(counselorList[index].count){ %><%=counselorList[index].count%><% }else{ %>0<% } %></td>
+                        <td><% if(counselorList[index].online){ %>在线<% }else{ %>离线<% } %></td>
+                        <td>
+                            <a href="javascript:rmCounselor('<%=counselorList[index].id%>');">删除</a>
+                            <a href="/coumg/toModifyCounselor?counselorId=<%=counselorList[index].id%>">修改</a>
+                            <a href="/coumg/recordList?counselorId=<%=counselorList[index].id%>">咨询记录</a>
+                        </td>
+                    </tr>
+                <% } %>
+                </tbody>
+            </table>
+
+            <div class="page-all">
+                <div class="page">
+                    <ul>
+                        <li>
+                            <a href="/coumg/counselor?curentpage=<%=parseInt(page.curentpage)-1%>"><span class="arrow_left"></span></a>
+                        </li>
+                        <% for(var index=0;index<page.pageNumber;index++){ %>
+                            <li <% if(page.curentpage==index){ %>class="page_active"<% } %> >
+                                <a href="/coumg/counselor?curentpage=<%=index%>"><%=index+1%></a>
+                            </li>
+                        <% } %>
+                        <li>
+                            <a href="/coumg/counselor?curentpage=<%=parseInt(page.curentpage)+1%>"><span class="arrow_right"></span></a>
+                        </li>
+                        <div class="clr"></div>
+                    </ul>
+                </div>
+                <div class="clr"></div>
+            </div><!--page-all-->
+
+        </div><!--consultant-list-->
+    </div><!--consultant-all-->
+
+    <div class="foot">
+        <p>Copyright (C) 中盛凯新企业集团版权所有</p>
+    </div>
+
+<script type="text/javascript">
+    function rmCounselor(id){
+        $.ajax({
+            async: false,
+            url:'/coumg/rmCounselor',
+            type:'post',
+            data:{id:id},
+            dataType:'json',
+            success:function(data){
+                location.href="/coumg/counselor?curentpage=<%=page.curentpage%>";
+            }
+        });
+    }
+</script>
+</body>
+</html>

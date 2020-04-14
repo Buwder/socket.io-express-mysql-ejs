@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>心理咨询平台</title>
+    <link href="/user/css/user.css" rel="stylesheet" type="text/css">
+    <link href="/user/css/user_s.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/util/js/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $("#header_consultant_list").addClass("menu-active");
+        })
+    </script>
+</head>
+<body>
+    <%include header.html%>
+
+    <div class="consultant-list">
+        <ul>
+            <% for(var index in counselorInfoList){ %>
+                <li>
+                    <div class="zx-img">
+                        <% if(counselorInfoList[index].head_img_id==""){ %>
+                            <img src="/user/images/default.png"  />
+                        <% }else{ %>
+                            <img src="/coumg/showIMGdata?imgId=<%=counselorInfoList[index].head_img_id%>"  />
+                        <%}%>
+                    </div>
+                    <div class="zx-infor">
+                        <div class="<% if(counselorInfoList[index].sex=='MALE'){ %>zx-man<% }else{ %>zx-woman<% } %>">
+                            <h1><%=counselorInfoList[index].counselor_name%></h1>
+                            <span></span>
+                        </div>
+                        <p class="zx-profile"><%=counselorInfoList[index].brief_introduction.length<40?counselorInfoList[index].brief_introduction:counselorInfoList[index].brief_introduction.substring(0,40)+'...' %></p>
+                        <a class="zx-view" href="/user/cou_infor?id=<%=counselorInfoList[index].id%>">查看资料</a>
+                        <div class="zx-btn">
+                            <a class="btn-record <%if(counselorInfoList[index].online!=true){%>btn-record-disabled<%}%>" href="<%if(counselorInfoList[index].online==true){%>/user/chat/chat?counselorId=<%=counselorInfoList[index].id%><%}else{%>javascript:void(0)<%}%>" target="_blank">咨询</a>
+                            <a class="btn-message" href="/user/message?counselorId=<%=counselorInfoList[index].id%>" >留言</a>
+                            <a class="btn-book <%if(counselorInfoList[index].count>0){%>btn-book-disabled<%}%>" href="<%if(counselorInfoList[index].count<=0){%>/user/make_appointment?id=<%=counselorInfoList[index].id%><%}else{%>javascript:void(0)<%}%>">预约</a>
+                        </div><!--zx-btn-->
+                    </div><!--zx-infor-->
+                </li>
+            <% } %>
+        </ul>
+    </div><!--consultant-list-->
+
+    <%include footer.html%>
+</body>
+</html>

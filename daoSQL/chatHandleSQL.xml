@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<sql>
+    <userInfo>
+        select id,removed,create_at,modify_at,login_name,product_id,user_name,age,sex
+        from user_info_t where id='{%=ucId%}' and removed='N'
+    </userInfo>
+    <counselorInfo>
+        select id,removed,create_at,modify_at,login_name,product_id,counselor_name,age,sex,brief_introduction
+        from counselor_info_t where id='{%=ucId%}' and removed='N'
+    </counselorInfo>
+    <AllCounselorInfo>
+        select
+        id,removed,create_at,modify_at,login_name,product_id,counselor_name,age,sex,brief_introduction,head_img_id
+        from counselor_info_t where removed='N' and product_id=(
+        select product_id from user_info_t where id='{%=ucId%}')
+
+    </AllCounselorInfo>
+    <saveSendMsgToDB>
+        insert into
+        chat_msg_t(id,create_at,modify_at,user_id,counselor_id,msg_text,consult_record_id,time_stamp,send_people_id,system_msg)
+        values('{%=id%}',now(),now(),'{%=user_id%}','{%=counselor_id%}','{%-msg_text%}','{%=consultRecordId%}','{%=timeStamp%}','{%=send_people_id%}','{%=system_msg%}')
+    </saveSendMsgToDB>
+    <saveUserRequestConsultationToDB>
+        insert into consult_record_t(id,create_at,modify_at,user_id,counselor_id,begin_at)
+        values('{%=id%}',now(),now(),'{%=user_id%}','{%=counselor_id%}',now())
+    </saveUserRequestConsultationToDB>
+    <saveUserRequestConsultationToDB>
+        select id,welcome_word from counselor_info_t where id='{%=counselor_id%}'
+    </saveUserRequestConsultationToDB>
+    <findCounselorWelcomeWord>
+        select id,welcome_word from counselor_info_t where id='{%=counselor_id%}'
+    </findCounselorWelcomeWord>
+    <selectConsultRecord>
+        select id,begin_at from consult_record_t where id='{%=id%}' and user_id='{%=user_id%}' and
+        counselor_id='{%=counselor_id%}'
+    </selectConsultRecord>
+    <saveCloseConsultationToDB>
+        update consult_record_t set end_at=now(),consult_time='{%=consult_time%}',end_people='{%=end_people%}' where
+        id='{%=id%}' and user_id='{%=user_id%}' and counselor_id='{%=counselor_id%}'
+    </saveCloseConsultationToDB>
+</sql>
+

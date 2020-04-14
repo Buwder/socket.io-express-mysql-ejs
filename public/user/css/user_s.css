@@ -1,0 +1,44 @@
+@charset "utf-8";
+
+/*998*/
+@media (max-width: 998px){
+	
+	a.logo{ width: 60%; margin-left: 10px!important;}
+	a.logo img{ width: 100%;}
+	
+	
+	ul.menu-all{ display: none;}
+	
+	/*按钮*/
+	a.btn-message{ display: none !important;}
+	a.btn-book-disabled{ display: none !important;}
+	a.zx-view{ display: none !important;}
+	a.send-btn{ width: 12%; font-size:18px;line-height:normal; vertical-align: bottom;}
+	
+	/*top-index*/
+	.top-index{ width:100%; padding: 0; height: 60px;}
+	
+	
+	/*consultant-list*/
+	.consultant-list{ width:100%; padding-top: 10px;min-height: inherit;}
+	.consultant-list ul{ margin-left: 0; padding: 0 10px;}
+	.consultant-list ul li{ width: 95%; margin-left: 0; margin-bottom: 10px; display: inline-block; float: none;}
+	.zx-img{ width:30%; height:130px; float: none; display: inline-block;}
+    .zx-img img{ width:100%; height:130px; }
+    .zx-infor{ width:66%; float: none; padding-left: 0; margin-left: 2%; display: inline-block; vertical-align: top;}
+	
+	/*alert_word*/
+	.alert_word{ display: none;}
+
+    /*chat-modular*/
+	.chat-modular{ width: 100%; min-height: inherit;}
+	.chat-enter{ height:108px; width:100%; position:fixed; bottom:0; left:0;}
+	.inter_all{ width:69%; height:88px;}
+	.expression-index{margin:0px 1% 0 1%; float:left; width:24px; height:24px; position:relative;  }
+	span.arrow-two{ z-index:0;}
+    .chat-index{ width:100%; min-height:292px; padding: 0 0 108px 0;}
+}
+
+
+
+

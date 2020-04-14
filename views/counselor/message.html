@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>心理咨询平台</title>
+    <link href="/counselor/css/consult-base.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/util/js/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $("#message").addClass("menu-active");
+        })
+
+        /*打开回复*/
+        function reply(msg_user_id){
+            var display=$("#message_text_"+msg_user_id).css("display");
+            if(display=='none'){
+                $("#message_text_"+msg_user_id).show();
+            }else{
+                $("#message_text_"+msg_user_id).hide();
+            }
+        }
+        /*提交回复*/
+        function submitReply(msg_user_id,userId){
+            var message_text=$("#text_"+msg_user_id).val();
+
+            if(message_text==''){
+                alert("回复内容不能为空！");
+                return
+            }
+
+            var param={
+                userId:userId,
+                msg_user_id:msg_user_id,
+                message_text:message_text
+            }
+            $.ajax({
+                async: false,
+                url:'/counselor/work/submit_message',
+                type:'post',
+                data:param,
+                dataType:'json',
+                success:function(result){
+                    window.location.reload();
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <%include header.html%>
+
+    <div class="message-modular">
+        <div class="message-title">
+            <h1><span>用户留言</span></h1>
+        </div><!--message-title-->
+        <div class="message-list">
+            <% for(var index in messageList){ %>
+                <div class="message-one">
+                    <div class="message-question">
+                        <span class="question-title"><%=messageList[index].user_name%>：</span>
+                        <p class="question-text"><%-messageList[index].user_message_text%></p>
+                        <span class="question-time"><%=messageList[index].msg_user_create_at%></span>
+                    </div><!--message-question-->
+                    <div class="message-question message-answer">
+                        <span class="question-title">回复：</span>
+                        <%if(messageList[index].counselor_message_text){%>
+                            <p class="question-text"><%-messageList[index].counselor_message_text%></p>
+                            <span class="question-time"><%=messageList[index].msg_counselor_create_at%></span>
+                        <%}else{%>
+                            <div class="reply-btn">
+                                <a href="javascript:reply('<%=messageList[index].msg_user_id%>')">回复</a>
+                            </div>
+                            <div style="display: none;" class="message-text" id="message_text_<%=messageList[index].msg_user_id%>">
+                                <textarea id="text_<%=messageList[index]. msg_user_id%>"></textarea>
+                                <a href="javascript:submitReply('<%=messageList[index].msg_user_id%>','<%=messageList[index].user_id%>')">提交</a>
+                            </div><!--message-text-->
+                        <%}%>
+                    </div><!--message-answer-->
+                </div><!--message-one-->
+            <% } %>
+        </div><!--message-list-->
+
+        <div class="page_all">
+            <div class="page">
+                <ul>
+                    <li>
+                        <a href="/counselor/work/message?curentpage=<%=parseInt(page.curentpage)-1%>"><span class="arrow_left"></span></a>
+                    </li>
+                    <% for(var index=0;index<page.pageNumber;index++){ %>
+                    <li <% if(page.curentpage==index){ %>class="page_active"<% } %> >
+                    <a href="/counselor/work/message?curentpage=<%=index%>"><%=index+1%></a>
+                    </li>
+                    <% } %>
+                    <li>
+                        <a href="/counselor/work/message?curentpage=<%=parseInt(page.curentpage)+1%>"><span class="arrow_right"></span></a>
+                    </li>
+                    <div class="clr"></div>
+                </ul>
+            </div>
+            <div class="clr"></div>
+        </div><!--page-all-->
+
+    </div><!--message-modular-->
+
+    <%include footer.html%>
+</body>
+</html>

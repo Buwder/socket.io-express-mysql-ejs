@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>心理咨询平台</title>
+    <link href="/counselor/css/consult-base.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/util/js/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $("#consultant_record").addClass("menu-active");
+        })
+    </script>
+    <style>
+        #showduck{background: #fff;width:960px;height:610px;position: fixed;padding:20px 0;
+            display: none;}
+        #showduck div{margin:0 auto;}
+        #showduck div button{border:none;background: #176daa;border-radius:3px;color:#fff;text-align: center;line-height: 30px;width:100px;cursor:pointer;}
+        #showduck div label{
+            font-size: 14px;
+            line-height: 30px;
+            display: block;}
+        #showduck div textarea{
+            width: 80%;
+            height: 120px;
+            border:1px solid #ddd;padding: 5px}
+
+        #back{background: #f60!important;}
+    </style>
+</head>
+<body>
+    <%include header.html%>
+
+    <div class="message-modular">
+        <div id="showduck">
+            <div>
+                <p>
+                    <label>主要问题:<br /><textarea id="zywt"></textarea></label>
+                </p>
+                <p>
+                    <label>解决措施:<br /><textarea id="jjcs"></textarea></label>
+                </p>
+                <button id="tijiao" data-id="" onclick="req(this)">提交</button>
+                <button id="back" onclick="back()">返回</button>
+            </div>
+        </div>
+        <div class="message-title">
+            <h1><span>咨询记录</span></h1>
+        </div><!--message-title-->
+        <div class="record-all">
+            <table class="record-list" border="0" cellspacing="0" cellpadding="0">
+                <thead>
+                <tr>
+                    <th>用户姓名</th>
+                    <th>开始时间</th>
+                    <th>咨询时长</th>
+                    <th>操作</th>
+                    <th>记录</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% for(var index in recordList){ %>
+                    <tr>
+                        <td><%=recordList[index].user_name%></td>
+                        <td><%=recordList[index].begin_at%></td>
+                        <td><%=recordList[index].consult_time%></td>
+                        <td>
+                            <a href="/counselor/work/one_consultant_record?consultRecordId=<%=recordList[index].id%>">查看</a>
+                        </td>
+                        <td>
+                            <a href="javascript:showBeizhu('<%=recordList[index].id%>');">添加备忘录</a>
+                        </td>
+                    </tr>
+                <% } %>
+                </tbody>
+            </table>
+
+            <div class="page_all">
+                <div class="page">
+                    <ul>
+                        <li>
+                            <a href="/counselor/work/consultant_record?curentpage=<%=parseInt(page.curentpage)-1%>"><span class="arrow_left"></span></a>
+                        </li>
+                        <% for(var index=0;index<page.pageNumber;index++){ %>
+                        <li <% if(page.curentpage==index){ %>class="page_active"<% } %> >
+                        <a href="/counselor/work/consultant_record?curentpage=<%=index%>"><%=index+1%></a>
+                        </li>
+                        <% } %>
+                        <li>
+                            <a href="/counselor/work/consultant_record?curentpage=<%=parseInt(page.curentpage)+1%>"><span class="arrow_right"></span></a>
+                        </li>
+                        <div class="clr"></div>
+                    </ul>
+                </div>
+                <div class="clr"></div>
+            </div><!--page-all-->
+
+        </div><!--record-all-->
+    </div><!--chat-modular-->
+    <script>
+        function  showBeizhu(e) {
+            document.getElementById("showduck").style.display="block";
+            document.getElementById("tijiao").setAttribute("data-id",e);
+            $.ajax({
+                url:'/counselor/work/selbeiwang',
+                type:'get',
+                data:{id:e},
+                dataType:'json',
+                success:function (data) {
+                    if(data.code == 0){
+                        document.getElementById("zywt").value = data.data.main_problem;
+                        document.getElementById("jjcs").value =data.data.measure
+                        console.log('查看成功!');
+                    }else{
+                        console.log('查看失败!');
+                    }
+                }
+            })
+        }
+        function back() {
+            document.getElementById("showduck").style.display="none";
+        }
+        function req(event) {
+            var zywt = document.getElementById("zywt").value;
+            var jjcs = document.getElementById("jjcs").value;
+            $.ajax({
+                url:'/counselor/work/addbeiwang',
+                type:'post',
+                data:{id:event.getAttribute("data-id"),zywt:zywt,jjcs:jjcs},
+                dataType:'json',
+                success:function (data) {
+                    if(data.code == 0){
+                        alert('提交成功');
+                        back();
+                    }else{
+                        alert('提交失败');
+                    }
+                }
+            })
+        }
+    </script>
+    <%include footer.html%>
+</body>
+</html>

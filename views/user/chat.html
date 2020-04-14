@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>心理咨询平台</title>
+    <link href="/user/css/user.css" rel="stylesheet" type="text/css">
+    <link href="/util/css/expression.css" rel="stylesheet" type="text/css">
+    <link href="/user/css/user_s.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/util/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/util/js/jquery.tmpl.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/util/js/uuid.js"></script>
+    <script src="/util/js/ownUtil.js"></script>
+    <style>
+        #timeout{color:#f60;width:100px;text-align: right;}
+    </style>
+</head>
+<body>
+    <div class="top-index">
+        <ul class="menu-all">
+        </ul><!--menu-all-->
+        <a class="logo">
+            <img src="/user/images/logo.png"/>
+        </a>
+    </div><!--top-index-->
+
+    <div class="chat-modular">
+        <div class="chat-head">
+
+            <a class="end-btn" href="javascript:closeConsultation('<%=user.userId%>');">结束咨询</a>
+            <a class="chat-img">
+                <img src="/coumg/showIMGdata?imgId=<%=couInfor.head_img_id%>" />
+                <p><%=couInfor.counselor_name%></p>
+                <p id="timeout">50分00秒</p>
+            </a>
+        </div><!--chat-head-->
+        <div class="chat-index" id="chat_index">
+            <div class="chat-index-inall" id="send-receive-msg">
+
+            </div><!--chat-index-inall-->
+        </div><!--chat-index-->
+
+        <div class="chat-enter">
+            <div class="expression-index">
+                <a class="smile-icon" id="smile-icon" href="javascript:smileIcon()"></a>
+                <div class="expression-layer" id="expression_layer" style="display: none;">
+                    <div class="expression-face">
+                        <a title="微笑" class="expression-icon exp-face1" href="javascript:selectExpFace('exp-brow1')"></a>
+                        <a title="撇嘴" class="expression-icon exp-face2" href="javascript:selectExpFace('exp-brow2')"></a>
+                        <a title="色" class="expression-icon exp-face3" href="javascript:selectExpFace('exp-brow3')"></a>
+                        <a title="发呆" class="expression-icon exp-face4" href="javascript:selectExpFace('exp-brow4')"></a>
+                        <a title="得意" class="expression-icon exp-face5" href="javascript:selectExpFace('exp-brow5')"></a>
+                        <a title="流泪" class="expression-icon exp-face6" href="javascript:selectExpFace('exp-brow6')"></a>
+                        <a title="流泪" class="expression-icon exp-face7" href="javascript:selectExpFace('exp-brow7')"></a>
+                        <a title="闭嘴" class="expression-icon exp-face8" href="javascript:selectExpFace('exp-brow8')"></a>
+                        <a title="睡" class="expression-icon exp-face9" href="javascript:selectExpFace('exp-brow9')"></a>
+                        <a title="大哭" class="expression-icon exp-face10" href="javascript:selectExpFace('exp-brow10')"></a>
+                        <a title="尴尬" class="expression-icon exp-face11" href="javascript:selectExpFace('exp-brow11')"></a>
+                        <a title="发怒" class="expression-icon exp-face12" href="javascript:selectExpFace('exp-brow12')"></a>
+                        <a title="调皮" class="expression-icon exp-face13" href="javascript:selectExpFace('exp-brow13')"></a>
+                        <a title="呲牙" class="expression-icon exp-face14" href="javascript:selectExpFace('exp-brow14')"></a>
+                        <a title="惊讶" class="expression-icon exp-face15" href="javascript:selectExpFace('exp-brow15')"></a>
+                        <a title="难过" class="expression-icon exp-face16" href="javascript:selectExpFace('exp-brow16')"></a>
+                        <a title="酷" class="expression-icon exp-face17" href="javascript:selectExpFace('exp-brow17')"></a>
+                        <a title="冷汗" class="expression-icon exp-face18" href="javascript:selectExpFace('exp-brow18')"></a>
+                        <a title="抓狂" class="expression-icon exp-face19" href="javascript:selectExpFace('exp-brow19')"></a>
+                        <a title="吐" class="expression-icon exp-face20" href="javascript:selectExpFace('exp-brow20')"></a>
+                        <a title="偷笑" class="expression-icon exp-face21" href="javascript:selectExpFace('exp-brow21')"></a>
+                        <a title="愉快" class="expression-icon exp-face22" href="javascript:selectExpFace('exp-brow22')"></a>
+                        <a title="白眼" class="expression-icon exp-face23" href="javascript:selectExpFace('exp-brow23')"></a>
+                        <a title="傲慢" class="expression-icon exp-face24" href="javascript:selectExpFace('exp-brow24')"></a>
+                        <a title="饥饿" class="expression-icon exp-face25" href="javascript:selectExpFace('exp-brow25')"></a>
+                        <a title="困" class="expression-icon exp-face26" href="javascript:selectExpFace('exp-brow26')"></a>
+                        <a title="惊恐" class="expression-icon exp-face27" href="javascript:selectExpFace('exp-brow27')"></a>
+                        <a title="流汗" class="expression-icon exp-face28" href="javascript:selectExpFace('exp-brow28')"></a>
+                        <a title="憨笑" class="expression-icon exp-face29" href="javascript:selectExpFace('exp-brow29')"></a>
+                        <a title="悠闲" class="expression-icon exp-face30" href="javascript:selectExpFace('exp-brow30')"></a>
+                        <a title="奋斗" class="expression-icon exp-face31" href="javascript:selectExpFace('exp-brow31')"></a>
+                        <a title="咒骂" class="expression-icon exp-face32" href="javascript:selectExpFace('exp-brow32')"></a>
+                        <a title="疑问" class="expression-icon exp-face33" href="javascript:selectExpFace('exp-brow33')"></a>
+                        <a title="嘘" class="expression-icon exp-face34" href="javascript:selectExpFace('exp-brow34')"></a>
+                        <a title="晕" class="expression-icon exp-face35" href="javascript:selectExpFace('exp-brow35')"></a>
+                        <a title="疯了" class="expression-icon exp-face36" href="javascript:selectExpFace('exp-brow36')"></a>
+                        <a title="衰" class="expression-icon exp-face37" href="javascript:selectExpFace('exp-brow37')"></a>
+                        <a title="骷髅" class="expression-icon exp-face38" href="javascript:selectExpFace('exp-brow38')"></a>
+                        <a title="敲打" class="expression-icon exp-face39" href="javascript:selectExpFace('exp-brow39')"></a>
+                        <a title="再见" class="expression-icon exp-face40" href="javascript:selectExpFace('exp-brow40')"></a>
+                        <a title="擦汗" class="expression-icon exp-face41" href="javascript:selectExpFace('exp-brow41')"></a>
+                        <a title="抠鼻" class="expression-icon exp-face42" href="javascript:selectExpFace('exp-brow42')"></a>
+                        <a title="鼓掌" class="expression-icon exp-face43" href="javascript:selectExpFace('exp-brow43')"></a>
+                        <a title="糗大了" class="expression-icon exp-face44" href="javascript:selectExpFace('exp-brow44')"></a>
+                        <a title="坏笑" class="expression-icon exp-face45" href="javascript:selectExpFace('exp-brow45')"></a>
+                        <a title="左哼哼" class="expression-icon exp-face46" href="javascript:selectExpFace('exp-brow46')"></a>
+                        <a title="右哼哼" class="expression-icon exp-face47" href="javascript:selectExpFace('exp-brow47')"></a>
+                        <a title="哈欠" class="expression-icon exp-face48" href="javascript:selectExpFace('exp-brow48')"></a>
+                        <a title="鄙视" class="expression-icon exp-face49" href="javascript:selectExpFace('exp-brow49')"></a>
+                        <a title="委屈" class="expression-icon exp-face50" href="javascript:selectExpFace('exp-brow50')"></a>
+                        <a title="快哭了" class="expression-icon exp-face51" href="javascript:selectExpFace('exp-brow51')"></a>
+                        <a title="阴险" class="expression-icon exp-face52" href="javascript:selectExpFace('exp-brow52')"></a>
+                        <a title="亲亲" class="expression-icon exp-face53" href="javascript:selectExpFace('exp-brow53')"></a>
+                        <a title="吓" class="expression-icon exp-face54" href="javascript:selectExpFace('exp-brow54')"></a>
+                        <a title="可怜" class="expression-icon exp-face55" href="javascript:selectExpFace('exp-brow55')"></a>
+                        <a title="菜刀" class="expression-icon exp-face56" href="javascript:selectExpFace('exp-brow56')"></a>
+                        <a title="西瓜" class="expression-icon exp-face57" href="javascript:selectExpFace('exp-brow57')"></a>
+                        <a title="啤酒" class="expression-icon exp-face58" href="javascript:selectExpFace('exp-brow58')"></a>
+                        <a title="篮球" class="expression-icon exp-face59" href="javascript:selectExpFace('exp-brow59')"></a>
+                        <a title="乒乓" class="expression-icon exp-face60" href="javascript:selectExpFace('exp-brow60')"></a>
+                        <a title="咖啡" class="expression-icon exp-face61" href="javascript:selectExpFace('exp-brow61')"></a>
+                        <a title="饭" class="expression-icon exp-face62" href="javascript:selectExpFace('exp-brow62')"></a>
+                        <a title="猪头" class="expression-icon exp-face63" href="javascript:selectExpFace('exp-brow63')"></a>
+                        <a title="玫瑰" class="expression-icon exp-face64" href="javascript:selectExpFace('exp-brow64')"></a>
+                        <a title="凋谢" class="expression-icon exp-face65" href="javascript:selectExpFace('exp-brow65')"></a>
+                        <a title="嘴唇" class="expression-icon exp-face66" href="javascript:selectExpFace('exp-brow66')"></a>
+                        <a title="爱心" class="expression-icon exp-face67" href="javascript:selectExpFace('exp-brow67')"></a>
+                        <a title="心碎" class="expression-icon exp-face68" href="javascript:selectExpFace('exp-brow68')"></a>
+                        <a title="蛋糕" class="expression-icon exp-face69" href="javascript:selectExpFace('exp-brow69')"></a>
+                        <a title="闪电" class="expression-icon exp-face70" href="javascript:selectExpFace('exp-brow70')"></a>
+                        <a title="炸弹" class="expression-icon exp-face71" href="javascript:selectExpFace('exp-brow71')"></a>
+                        <a title="刀" class="expression-icon exp-face72" href="javascript:selectExpFace('exp-brow72')"></a>
+                        <a title="足球" class="expression-icon exp-face73" href="javascript:selectExpFace('exp-brow73')"></a>
+                        <a title="瓢虫" class="expression-icon exp-face74" href="javascript:selectExpFace('exp-brow74')"></a>
+                        <a title="便便" class="expression-icon exp-face75" href="javascript:selectExpFace('exp-brow75')"></a>
+                        <a title="月亮" class="expression-icon exp-face76" href="javascript:selectExpFace('exp-brow76')"></a>
+                        <a title="太阳" class="expression-icon exp-face77" href="javascript:selectExpFace('exp-brow77')"></a>
+                        <a title="礼物" class="expression-icon exp-face78" href="javascript:selectExpFace('exp-brow78')"></a>
+                        <a title="拥抱" class="expression-icon exp-face79" href="javascript:selectExpFace('exp-brow79')"></a>
+                        <a title="强" class="expression-icon exp-face80" href="javascript:selectExpFace('exp-brow80')"></a>
+                        <a title="弱" class="expression-icon exp-face81" href="javascript:selectExpFace('exp-brow81')"></a>
+                        <a title="握手" class="expression-icon exp-face82" href="javascript:selectExpFace('exp-brow82')"></a>
+                        <a title="胜利" class="expression-icon exp-face83" href="javascript:selectExpFace('exp-brow83')"></a>
+                        <a title="抱拳" class="expression-icon exp-face84" href="javascript:selectExpFace('exp-brow84')"></a>
+                        <a title="勾引" class="expression-icon exp-face85" href="javascript:selectExpFace('exp-brow85')"></a>
+                        <a title="拳头" class="expression-icon exp-face86" href="javascript:selectExpFace('exp-brow86')"></a>
+                        <a title="差劲" class="expression-icon exp-face87" href="javascript:selectExpFace('exp-brow87')"></a>
+                        <a title="爱你" class="expression-icon exp-face88" href="javascript:selectExpFace('exp-brow88')"></a>
+                        <a title="NO" class="expression-icon exp-face89" href="javascript:selectExpFace('exp-brow89')"></a>
+                        <a title="OK" class="expression-icon exp-face90" href="javascript:selectExpFace('exp-brow90')"></a>
+                        <a title="爱情" class="expression-icon exp-face91" href="javascript:selectExpFace('exp-brow91')"></a>
+                        <a title="飞吻" class="expression-icon exp-face92" href="javascript:selectExpFace('exp-brow92')"></a>
+                        <a title="跳跳" class="expression-icon exp-face93" href="javascript:selectExpFace('exp-brow93')"></a>
+                        <a title="发抖" class="expression-icon exp-face94" href="javascript:selectExpFace('exp-brow94')"></a>
+                        <a title="怄火" class="expression-icon exp-face95" href="javascript:selectExpFace('exp-brow95')"></a>
+                        <a title="转圈" class="expression-icon exp-face96" href="javascript:selectExpFace('exp-brow96')"></a>
+                        <a title="磕头" class="expression-icon exp-face97" href="javascript:selectExpFace('exp-brow97')"></a>
+                        <a title="回头" class="expression-icon exp-face98" href="javascript:selectExpFace('exp-brow98')"></a>
+                        <a title="跳绳" class="expression-icon exp-face99" href="javascript:selectExpFace('exp-brow99')"></a>
+                        <a title="投降" class="expression-icon exp-face100" href="javascript:selectExpFace('exp-brow100')"></a>
+                        <a title="激动" class="expression-icon exp-face101" href="javascript:selectExpFace('exp-brow101')"></a>
+                        <a title="乱舞" class="expression-icon exp-face102" href="javascript:selectExpFace('exp-brow102')"></a>
+                        <a title="献吻" class="expression-icon exp-face103" href="javascript:selectExpFace('exp-brow103')"></a>
+                        <a title="左太极" class="expression-icon exp-face104" href="javascript:selectExpFace('exp-brow104')"></a>
+                        <a title="右太极" class="expression-icon exp-face105" href="javascript:selectExpFace('exp-brow105')"></a>
+                    </div><!--qqface-->
+                </div><!--expression-layer-->
+            </div><!--expression-index-->
+
+            <div class="inter_all" contenteditable="true" id="send_msg_text" onkeyup="send_msg_text_keyup(this);"></div>
+            <!--记录-->
+            <span id="consultRecordId" value="" style="display: none;"></span>
+
+            <a class="send-btn" id="send-btn" href="javascript:sendMsg('<%=user.userId%>');">发送</a>
+        </div><!--chat-enter-->
+    </div><!--chat-modular-->
+
+<script type="text/zskx-tmpl" id="system-msg-tmpl">
+    <div class="chat-time">
+        <i></i>${timeStampFormat}<i></i>
+    </div><!--chat-time-->
+    <p class="infor-alert">${systemMsgText}</p>
+</script>
+<script type="text/zskx-tmpl" id="send-msg-tmpl">
+    <div class="chat-two">
+        <div class="chat-consult">
+            <div class="chat-user-img">
+                <img src="/user/images/ing-seven.jpg" />
+            </div>
+            <div class="chat-user-infor">
+                <span class="arrow-two"></span>
+                <div class="user-scope">{{html sendMsgText}}</div>
+            </div>
+        </div><!--chat-consult-->
+    </div><!--chat-two-->
+</script>
+<script type="text/zskx-tmpl" id="receive-msg-tmpl">
+    <div class="chat-one">
+        <div class="chat-consult">
+            <div class="chat-consult-img">
+                <img src="/coumg/showIMGdata?imgId=${ucData.head_img_id}" />
+            </div>
+            <div class="chat-consult-infor">
+                <span class="arrow-one"></span>
+                    <div class="chat-scope">{{html receiveMsgText}}</div>
+            </div>
+        </div><!--chat-consult-->
+    </div><!--chat-one-->
+</script>
+
+    <%include footer.html%>
+
+    <!--播放提示音-->
+    <audio id="auem"><source src="/song/hint.mp3" type="audio/mp3"></audio>
+
+    <script type="text/javascript">
+        var counselorId='<%=couInfor.id%>';
+        var chatIp='http://<%=otherConfig.host%>:<%=otherConfig.port%>?ucId=<%=user.userId%>&identity=user&counselorId=<%=couInfor.id%>';
+    </script>
+    <script type="text/javascript" src="/user/js/userChat.js"></script>
+    <script type="text/javascript" src="/user/js/user.js"></script>
+    <script type="text/javascript">
+        /*当网页页面刷新或者关闭时触发*/
+        document.body.onbeforeunload = function (event) {
+            var c = event || window.event;
+            if (/webkit/.test(navigator.userAgent.toLowerCase())) {
+                return '请确保您正在进行的咨询已经结束！';
+            }else {
+                c.returnValue='请确保您正在进行的咨询已经结束！';
+            }
+        }
+        function resetTime(time){
+            var timer=null;
+            var t=time;
+            var m=0;
+            var s=0;
+            m=Math.floor(t/60%60);
+            m<10&&(m='0'+m);
+            s=Math.floor(t%60);
+            function countDown(){
+                s--;
+                s<10&&(s='0'+s);
+                if(s.length>=3){
+                    s=59;
+                    m=(Number(m)-1);
+                }
+                if(m.length>=3){
+                    m='00';
+                    s='00';
+                    clearInterval(timer);
+                }
+                $("#timeout").html(m+"分"+s+"秒");
+                if(m < 1 && s < 1){
+                    window.history.go(-1);
+                    closeConsultation('<%=user.userId%>');
+                }
+            }
+            timer=setInterval(countDown,1000);
+        }
+        resetTime(24600);
+    </script>
+</body>
+</html>

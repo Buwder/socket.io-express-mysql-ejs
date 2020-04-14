@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<sql>
+    <adminOtherInfo>
+        select id,removed,create_at,modify_at,admin_name,product_id,admin_url_param,admin_url_param_time_stamp
+        from admin_info_t
+        where removed='N' and admin_url_param='{%=id%}'
+    </adminOtherInfo>
+    <adminInfo>
+        select id,removed,create_at,modify_at,admin_name,product_id
+        from admin_info_t
+        where removed='N' and login_name='{%=loginName%}' and password='{%=password%}'
+    </adminInfo>
+    <insertCounselor>
+        insert into
+        counselor_info_t(id,create_at,modify_at,login_name,password,counselor_name,product_id,welcome_word,age,sex,brief_introduction,head_img_id,appointment_max_num,work_time_interval)
+        values('{%=id%}',now(),now(),'{%=login_name%}','{%=password%}','{%=counselor_name%}','{%=product_id%}','{%=welcome_word%}','{%=age%}','{%=sex%}','{%=brief_introduction%}','{%=head_img_id%}','100','9:00--17:00')
+    </insertCounselor>
+    <updateCounselor>
+        update counselor_info_t
+        set
+        modify_at=now(),login_name='{%=login_name%}',password='{%=password%}',counselor_name='{%=counselor_name%}',welcome_word='{%=welcome_word%}',
+        age='{%=age%}',sex='{%=sex%}',brief_introduction='{%=brief_introduction%}',head_img_id='{%=head_img_id%}'
+        where id='{%=id%}'
+    </updateCounselor>
+    <counselorList>
+        select
+        ci.id,ci.create_at,ci.modify_at,ci.login_name,ci.counselor_name,ci.product_id,ci.welcome_word,ci.age,ci.sex,ci.brief_introduction,ci.head_img_id,cr.count
+        from counselor_info_t ci
+        left join (select counselor_id,count(1) count from consult_record_t where removed='N' group by counselor_id ) cr
+        on ci.id=cr.counselor_id
+        where ci.removed='N' and ci.product_id='{%=product_id%}'
+        order by ci.modify_at desc
+        limit {%=startLine%},{%=pagesize%}
+    </counselorList>
+    <counselorListCout>
+        select count(1) count
+        from counselor_info_t ci
+        left join (select counselor_id,count(1) count from consult_record_t where removed='N' group by counselor_id ) cr
+        on ci.id=cr.counselor_id
+        where ci.removed='N' and ci.product_id='{%=product_id%}'
+        order by ci.modify_at desc
+    </counselorListCout>
+    <rmCounselor>
+        update counselor_info_t set removed='Y' where id='{%=id%}'
+    </rmCounselor>
+    <recordList>
+        select cr.id,cr.begin_at,cr.consult_time,cr.user_id,ui.user_name
+        from consult_record_t cr left join user_info_t ui on cr.user_id=ui.id
+        where cr.removed='N' and cr.counselor_id='{%=counselorId%}'
+        order by cr.begin_at desc
+        limit {%=startLine%},{%=pagesize%}
+    </recordList>
+    <recordrListCout>
+        select count(1) count
+        from consult_record_t cr left join user_info_t ui on cr.user_id=ui.id
+        where cr.removed='N' and cr.counselor_id='{%=counselorId%}'
+    </recordrListCout>
+    <recordDetail>
+        select id,create_at,user_id,counselor_id,msg_text,consult_record_id,time_stamp,send_people_id,system_msg
+        from chat_msg_t
+        where removed='N' and consult_record_id='{%=consultRecordId%}'
+        order by create_at asc
+    </recordDetail>
+    <counselorInfo>
+        select id,login_name,password,counselor_name,product_id,welcome_word,age,sex,brief_introduction,head_img_id
+        from counselor_info_t
+        where removed='N' and id='{%=counselorId%}'
+    </counselorInfo>
+    <insertIMGData>
+        insert into img_data_t(id,img_data) values('{%=id%}','{%=imgData%}')
+    </insertIMGData>
+    <showIMGdata>
+        select id,img_data from img_data_t where id='{%=imgId%}' and removed='N'
+    </showIMGdata>
+</sql>
+

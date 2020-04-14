@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<sql>
+    <authProduct>
+        select *
+        from product_info_t where removed='N' and product_key='{%=productKey%}'
+    </authProduct>
+    <authUserInfo>
+        select id from user_info_t where removed='N' and product_id='{%=productId%}' and user_key='{%=userKey%}'
+    </authUserInfo>
+    <updateUserInfo>
+        update user_info_t set
+        modify_at=now(),user_name='{%=userName%}',age='{%=age%}',sex='{%=sex%}',login_name='{%=loginName%}',password='{%=password%}'
+        where id='{%=userId%}'
+    </updateUserInfo>
+    <updateUserUrlParam>
+        update user_info_t
+        set user_url_param='{%=user_url_param%}',user_url_param_time_stamp='{%=user_url_param_time_stamp%}'
+        where id='{%=userId%}' and removed='N'
+    </updateUserUrlParam>
+    <insertUserInfo>
+        insert into user_info_t(id,create_at,modify_at,product_id,user_key,user_name,age,sex,login_name,password)
+        values('{%=userId%}',now(),now(),'{%=productId%}','{%=userKey%}','{%=userName%}','{%=age%}','{%=sex%}','{%=loginName%}','{%=password%}')
+    </insertUserInfo>
+    <authAdminInfo>
+        select id from admin_info_t where removed='N' and product_id='{%=productId%}' and admin_key='{%=adminKey%}'
+    </authAdminInfo>
+    <updateAdminInfo>
+        update admin_info_t set
+        modify_at=now(),admin_name='{%=admin_name%}',login_name='{%=loginName%}',password='{%=password%}'
+        where id='{%=adminId%}'
+    </updateAdminInfo>
+    <updateAdminUrlParam>
+        update admin_info_t
+        set admin_url_param='{%=admin_url_param%}',admin_url_param_time_stamp='{%=admin_url_param_time_stamp%}'
+        where id='{%=adminId%}' and removed='N'
+    </updateAdminUrlParam>
+    <insertAdminInfo>
+        insert into admin_info_t(id,create_at,modify_at,product_id,admin_name,admin_key,login_name,password)
+        values('{%=adminId%}',now(),now(),'{%=productId%}','{%=admin_name%}','{%=adminKey%}','{%=loginName%}','{%=password%}')
+    </insertAdminInfo>
+    <getCoumgList>
+        select * from  admin_info_t admi
+        LEFT JOIN product_info_t pro on pro.id=admi.product_id
+        where pro.product_key={%=productKey%}
+    </getCoumgList>
+    <productinfo>
+        SELECT * FROM product_info_t WHERE product_key={%=product_key%}
+    </productinfo>
+    <inHosinfo>
+        INSERT into product_info_t(removed,create_at,modify_at,product_name,product_key) VALUES ("N",NOW(),NOW(),'{%=product_name%}','{%=product_key%}')
+    </inHosinfo>
+</sql>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>心理咨询平台</title>
+    <link href="/user/css/user.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/util/js/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $("#header_consult_record").addClass("menu-active");
+        })
+    </script>
+</head>
+<body>
+    <%include header.html%>
+
+    <div class="message-modular">
+        <div class="message-title">
+            <h1><span>咨询记录</span></h1>
+        </div><!--message-title-->
+        <div class="record-all">
+            <table class="record-list" border="0" cellspacing="0" cellpadding="0">
+                <thead>
+                    <tr>
+                        <th>开始时间</th>
+                        <th>咨询对象</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(var index in recordList){ %>
+                        <tr>
+                            <td><%=recordList[index].begin_at%></td>
+                            <td><%=recordList[index].counselor_name%></td>
+                            <td>
+                                <a href="/user/one_consult_record?consultRecordId=<%=recordList[index].id%>">查看</a>
+                            </td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+
+            <div class="page_all">
+                <div class="page">
+                    <ul>
+                        <li>
+                            <a href="/user/consult_record?curentpage=<%=parseInt(page.curentpage)-1%>"><span class="arrow_left"></span></a>
+                        </li>
+                        <% for(var index=0;index<page.pageNumber;index++){ %>
+                            <li <% if(page.curentpage==index){ %>class="page_active"<% } %> >
+                                <a href="/user/consult_record?curentpage=<%=index%>"><%=index+1%></a>
+                            </li>
+                        <% } %>
+                        <li>
+                            <a href="/user/consult_record?curentpage=<%=parseInt(page.curentpage)+1%>"><span class="arrow_right"></span></a>
+                        </li>
+                        <div class="clr"></div>
+                    </ul>
+                </div>
+                <div class="clr"></div>
+            </div><!--page-all-->
+
+        </div><!--record-all-->
+    </div><!--chat-modular-->
+
+    <%include footer.html%>
+</body>
+</html>

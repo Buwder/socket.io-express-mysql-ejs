@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户登录</title>
+    <link href="/user/css/user.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/util/js/jquery.min.js"></script>
+    <script type="text/javascript">
+        function login(){
+            // if($("input[name='loginName']").val()==""){
+            //     $("#login_error").text("用户名不能为空");
+            //     return;
+            // }
+            // if($("input[name='password']").val()==""){
+            //     $("#login_error").text("密码不能为空");
+            //     return;
+            // }
+            var form=$('#form');
+            $.ajax({
+                async: false,
+                url:'/user/login',
+                type:'post',
+                data:form.serialize(),
+                dataType:'json',
+                success:function(data){
+                    if(data.code==0){
+                        location.href='/user/consultant_list';
+                    }else{
+                        alert('用户名或密码错误！');
+                    }
+                }
+            });
+        }
+
+        document.onkeydown = function(evt){
+            var evt = window.event?window.event:evt;
+            if(evt.keyCode==13){
+                login();
+            }
+        }
+    </script>
+
+</head>
+<body>
+    <div class="login-logo" style="
+        margin-top: 150px;
+        text-align: center;
+        margin-bottom: 50px;
+    ">
+        <img class="hospital-logo" src="images/logo.png">
+
+
+    </div>
+    <center style="
+    width: 400px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 6px;
+    /* margin-top: 200px; */
+    padding: 50px;
+">
+        <table>
+            <form id="form">
+                <tr>
+                    <td style="
+                        line-height: 40px;
+                        height: 40px;
+                        display: inline-block;
+                        text-align: right;
+                    ">用户名：</td>
+                    <td><input type="text" name="loginName" placeholder="请输入用户名" style="
+                        line-height: 40px;
+                        margin-bottom: 18px;
+                        -moz-border-radius: 3px 3px;
+                        -webkit-border-radius: 3px 3px;
+                        border-radius: 3px 3px;
+                        border: solid 1px #d4d4d4;
+                        padding-left: 15px;
+                        background-color: #ffffff;
+                        position: relative;
+                        padding-right: 30px;
+                        "></td>
+                </tr>
+                <tr>
+                    <td style="
+                        line-height: 40px;
+                        height: 40px;
+                        display: inline-block;
+                        text-align: right;
+                    "> 密码：</td>
+                    <td><input type="password" name="password"  placeholder="请输入用密码" style="
+                        line-height: 40px;
+                        margin-bottom: 18px;
+                        -moz-border-radius: 3px 3px;
+                        -webkit-border-radius: 3px 3px;
+                        border-radius: 3px 3px;
+                        border: solid 1px #d4d4d4;
+                        padding-left: 15px;
+                        background-color: #ffffff;
+                        position: relative;
+                        padding-right: 30px;
+                        "></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><a href="javascript:login()" style="display: block;
+    width: 100%;
+    font-size: 16px;
+    line-height: 40px;
+    -moz-border-radius: 4px 4px;
+    -webkit-border-radius: 4px 4px;
+    border-radius: 4px 4px;
+    background-color: #2d8bd3;
+    color: #ffffff;
+    text-align: center;">登录</a></td>
+                </tr>
+            </form>
+        </table>
+    </center>
+</body>
+</html>

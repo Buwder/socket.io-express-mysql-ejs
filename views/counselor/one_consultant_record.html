@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>心理咨询平台</title>
+    <link href="/counselor/css/consult-base.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/util/js/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $("#consultant_record").addClass("menu-active");
+        })
+    </script>
+</head>
+<body>
+    <%include header.html%>
+
+    <div class="message-modular">
+        <div class="message-title">
+            <a class="return-icon" href="/counselor/work/consultant_record">返回</a>
+            <h1><span>咨询记录</span></h1>
+        </div><!--message-title-->
+        <div class="record-all">
+            <div class="chat-index-inall">
+                <% for(var index in consultRecord){ %>
+                    <% if(consultRecord[index].system_msg=='N'){ %>
+                        <% if(consultRecord[index].user_id==consultRecord[index].send_people_id){ %>
+                            <div class="chat-one">
+                                <% if(index%9==2){ %>
+                                    <div class="chat-time">
+                                        <i></i>
+                                        <%=consultRecord[index].create_at%>
+                                        <i></i>
+                                    </div><!--chat-time-->
+                                <% } %>
+                                <div class="chat-consult">
+                                    <div class="chat-consult-img">
+                                        <img src="/counselor/images/ing-seven.jpg" />
+                                    </div>
+                                    <div class="chat-consult-infor">
+                                        <span class="arrow-one"></span>
+                                        <div class="chat-scope"><%-consultRecord[index].msg_text%></div>
+                                    </div>
+                                </div><!--chat-consult-->
+                            </div><!--chat-one-->
+                        <% }else{ %>
+                            <div class="chat-two">
+                                <% if(index%9==2){ %>
+                                <div class="chat-time">
+                                    <i></i>
+                                    <%=consultRecord[index].create_at%>
+                                    <i></i>
+                                </div><!--chat-time-->
+                                <% } %>
+                                <div class="chat-consult">
+                                    <div class="chat-user-img">
+                                        <img src="/coumg/showIMGdata?imgId=<%=consultRecord[index].head_img_id%>" />
+                                    </div>
+                                    <div class="chat-user-infor">
+                                        <span class="arrow-two"></span>
+                                        <div class="user-scope"><%-consultRecord[index].msg_text%></div>
+                                    </div>
+                                </div><!--chat-consult-->
+                            </div><!--chat-two-->
+                        <%}%>
+                    <%}%>
+                <%}%>
+            </div><!--chat-index-inall-->
+        </div><!--record-all-->
+    </div><!--chat-modular-->
+
+    <%include footer.html%>
+</body>
+</html>

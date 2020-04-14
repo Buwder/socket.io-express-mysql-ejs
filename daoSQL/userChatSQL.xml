@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<sql>
+    <couInfor>
+        select id,counselor_name,product_id,welcome_word,age,sex,brief_introduction,head_img_id
+        from counselor_info_t
+        where removed='N' and id='{%=counselorId%}'
+    </couInfor>
+    <appointmentInfo>
+        select id,user_id,counselor_id,create_at,appointment_date,removed,modify_at
+        from appointment_t
+        where user_id='{%=userId%}' and counselor_id='{%=counselorId%}' and removed='N'
+    </appointmentInfo>
+</sql>

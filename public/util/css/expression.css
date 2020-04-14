@@ -1,0 +1,252 @@
+@charset "utf-8";
+/* CSS Document */
+.expression-layer{ width:435px; height:202px; background-color:#ffffff; border:1px solid #dbdbdb; padding:15px 15px; position:absolute; bottom:30px; left:0; z-index:10000;}
+.expression-icon{ display: inline-block; float: left; width: 28px; height: 28px; font-size: 0; text-indent: -999em; border-bottom: 1px solid #F0F0F0; border-right: 1px solid #F0F0F0;
+    cursor: pointer; background: url(../images/qqfacePanel.png) no-repeat;}
+	
+.exp-face1{background-position:0 0;}
+.exp-face2{background-position:-29px 0;}
+.exp-face3{background-position:-58px 0;}
+.exp-face4{background-position:-87px 0;}
+.exp-face5{background-position:-116px 0;}
+.exp-face6{background-position:-145px 0;}
+.exp-face7{background-position:-174px 0;}
+.exp-face8{background-position:-203px 0;}
+.exp-face9{background-position:-232px 0;}
+.exp-face10{background-position:-261px 0;}
+.exp-face11{background-position:-290px 0;}
+.exp-face12{background-position:-319px 0;}
+.exp-face13{background-position:-348px 0;}
+.exp-face14{background-position:-377px 0;}
+.exp-face15{background-position:-406px 0;}
+
+.exp-face16{background-position:0 -29px;}
+.exp-face17{background-position:-29px -29px;}
+.exp-face18{background-position:-58px -29px;}
+.exp-face19{background-position:-87px -29px;}
+.exp-face20{background-position:-116px -29px;}
+.exp-face21{background-position:-145px -29px;}
+.exp-face22{background-position:-174px -29px;}
+.exp-face23{background-position:-203px -29px}
+.exp-face24{background-position:-232px -29px;}
+.exp-face25{background-position:-261px -29px;}
+.exp-face26{background-position:-290px -29px;}
+.exp-face27{background-position:-319px -29px;}
+.exp-face28{background-position:-348px -29px;}
+.exp-face29{background-position:-377px -29px;}
+.exp-face30{background-position:-406px -29px;}
+
+.exp-face31{background-position:0 -58px;}
+.exp-face32{background-position:-29px -58px;}
+.exp-face33{background-position:-58px -58px;}
+.exp-face34{background-position:-87px -58px;}
+.exp-face35{background-position:-116px -58px;}
+.exp-face36{background-position:-145px -58px;}
+.exp-face37{background-position:-174px -58px;}
+.exp-face38{background-position:-203px -58px;}
+.exp-face39{background-position:-232px -58px;}
+.exp-face40{background-position:-261px -58px;}
+.exp-face41{background-position:-290px -58px;}
+.exp-face42{background-position:-319px -58px;}
+.exp-face43{background-position:-348px -58px;}
+.exp-face44{background-position:-377px -58px;}
+.exp-face45{background-position:-406px -58px;}
+
+.exp-face46{background-position:0 -87px;}
+.exp-face47{background-position:-29px -87px;}
+.exp-face48{background-position:-58px -87px;}
+.exp-face49{background-position:-87px -87px;}
+.exp-face50{background-position:-116px -87px;}
+.exp-face51{background-position:-145px -87px;}
+.exp-face52{background-position:-174px -87px;}
+.exp-face53{background-position:-203px -87px;}
+.exp-face54{background-position:-232px -87px;}
+.exp-face55{background-position:-261px -87px;}
+.exp-face56{background-position:-290px -87px;}
+.exp-face57{background-position:-319px -87px;}
+.exp-face58{background-position:-348px -87px;}
+.exp-face59{background-position:-377px -87px;}
+.exp-face60{background-position:-406px -87px;}
+
+.exp-face61{background-position:0 -116px;}
+.exp-face62{background-position:-29px -116px;}
+.exp-face63{background-position:-58px -116px;}
+.exp-face64{background-position:-87px -116px;}
+.exp-face65{background-position:-116px -116px;}
+.exp-face66{background-position:-145px -116px;}
+.exp-face67{background-position:-174px -116px;}
+.exp-face68{background-position:-203px -116px;}
+.exp-face69{background-position:-232px -116px;}
+.exp-face70{background-position:-261px -116px;}
+.exp-face71{background-position:-290px -116px;}
+.exp-face72{background-position:-319px -116px;}
+.exp-face73{background-position:-348px -116px;}
+.exp-face74{background-position:-377px -116px;}
+.exp-face75{background-position:-406px -116px;}
+
+.exp-face76{background-position:0 -145px;}
+.exp-face77{background-position:-29px -145px;}
+.exp-face78{background-position:-58px -145px;}
+.exp-face79{background-position:-87px -145px;}
+.exp-face80{background-position:-116px -145px;}
+.exp-face81{background-position:-145px -145px;}
+.exp-face82{background-position:-174px -145px;}
+.exp-face83{background-position:-203px -145px;}
+.exp-face84{background-position:-232px -145px;}
+.exp-face85{background-position:-261px -145px;}
+.exp-face86{background-position:-290px -145px;}
+.exp-face87{background-position:-319px -145px;}
+.exp-face88{background-position:-348px -145px;}
+.exp-face89{background-position:-377px -145px;}
+.exp-face90{background-position:-406px -145px}
+
+.exp-face91{background-position:0 -174px;}
+.exp-face92{background-position:-29px -174px;}
+.exp-face93{background-position:-58px -174px;}
+.exp-face94{background-position:-87px -174px;}
+.exp-face95{background-position:-116px -174px;}
+.exp-face96{background-position:-145px -174px;}
+.exp-face97{background-position:-174px -174px;}
+.exp-face98{background-position:-203px -174px;}
+.exp-face99{background-position:-232px -174px;}
+.exp-face100{background-position:-261px -174px;}
+.exp-face101{background-position:-290px -174px;}
+.exp-face102{background-position:-319px -174px;}
+.exp-face103{background-position:-348px -174px;}
+.exp-face104{background-position:-377px -174px;}
+.exp-face105{background-position:-406px -174px;}
+
+.expression-span{ display: inline-block;  width: 20px; height: 20px; background: url(../images/qqSmilies.png) 0 0 no-repeat; zoom: 1; vertical-align: middle;}
+.exp-brow1{ background-position: -2px -2px;}
+.exp-brow2{ background-position: -27px -2px;}
+.exp-brow3{ background-position: -52px -2px;}
+.exp-brow4{ background-position: -77px -2px;}
+.exp-brow5{ background-position: -102px -2px;}
+.exp-brow6{ background-position: -127px -2px;}
+.exp-brow7{ background-position: -152px -2px;}
+.exp-brow8{ background-position: -177px -2px;}
+.exp-brow9{ background-position: -202px -2px;}
+.exp-brow10{ background-position: -227px -2px;}
+.exp-brow11{ background-position: -252px -2px;}
+.exp-brow12{ background-position: -277px -2px;}
+.exp-brow13{ background-position: -302px -2px;}
+.exp-brow14{ background-position: -327px -2px;}
+.exp-brow15{ background-position: -352px -2px;}
+
+.exp-brow16{ background-position: -2px -27px;}
+.exp-brow17{ background-position: -27px -27px;}
+.exp-brow18{ background-position: -52px -27px;}
+.exp-brow19{ background-position: -77px -27px;}
+.exp-brow20{ background-position: -102px -27px;}
+.exp-brow21{ background-position: -127px -27px;}
+.exp-brow22{ background-position: -152px -27px;}
+.exp-brow23{ background-position: -177px -27px;}
+.exp-brow24{ background-position: -202px -27px;}
+.exp-brow25{ background-position: -227px -27px;}
+.exp-brow26{ background-position: -252px -27px;}
+.exp-brow27{ background-position: -277px -27px;}
+.exp-brow28{ background-position: -302px -27px;}
+.exp-brow29{ background-position: -327px -27px;}
+.exp-brow30{ background-position: -352px -27px;}
+
+.exp-brow31{ background-position: -2px -52px;}
+.exp-brow32{ background-position: -27px -52px;}
+.exp-brow33{ background-position: -52px -52px;}
+.exp-brow34{ background-position: -77px -52px;}
+.exp-brow35{ background-position: -102px -52px;}
+.exp-brow36{ background-position: -127px -52px;}
+.exp-brow37{ background-position: -152px -52px;}
+.exp-brow38{ background-position: -177px -52px;}
+.exp-brow39{ background-position: -202px -52px;}
+.exp-brow40{ background-position: -227px -52px;}
+.exp-brow41{ background-position: -252px -52px;}
+.exp-brow42{ background-position: -277px -52px;}
+.exp-brow43{ background-position: -302px -52px;}
+.exp-brow44{ background-position: -327px -52px;}
+.exp-brow45{ background-position: -352px -52px;}
+
+.exp-brow46{ background-position: -2px -77px;}
+.exp-brow47{ background-position: -27px -77px;}
+.exp-brow48{ background-position: -52px -77px;}
+.exp-brow49{ background-position: -77px -77px;}
+.exp-brow50{ background-position: -102px -77px;}
+.exp-brow51{ background-position: -127px -77px;}
+.exp-brow52{ background-position: -152px -77px;}
+.exp-brow53{ background-position: -177px -77px;}
+.exp-brow54{ background-position: -202px -77px;}
+.exp-brow55{ background-position: -227px -77px;}
+.exp-brow56{ background-position: -252px -77px;}
+.exp-brow57{ background-position: -277px -77px;}
+.exp-brow58{ background-position: -302px -77px;}
+.exp-brow59{ background-position: -327px -77px;}
+.exp-brow60{ background-position: -352px -77px;}
+
+.exp-brow61{ background-position: -2px -102px;}
+.exp-brow62{ background-position: -27px -102px;}
+.exp-brow63{ background-position: -52px -102px;}
+.exp-brow64{ background-position: -77px -102px;}
+.exp-brow65{ background-position: -102px -102px;}
+.exp-brow66{ background-position: -127px -102px;}
+.exp-brow67{ background-position: -152px -102px;}
+.exp-brow68{ background-position: -177px -102px;}
+.exp-brow69{ background-position: -202px -102px;}
+.exp-brow70{ background-position: -227px -102px;}
+.exp-brow71{ background-position: -252px -102px;}
+.exp-brow72{ background-position: -277px -102px;}
+.exp-brow73{ background-position: -302px -102px;}
+.exp-brow74{ background-position: -327px -102px;}
+.exp-brow75{ background-position: -352px -102px;}
+
+.exp-brow76{ background-position: -2px -127px;}
+.exp-brow77{ background-position: -27px -127px;}
+.exp-brow78{ background-position: -52px -127px;}
+.exp-brow79{ background-position: -77px -127px;}
+.exp-brow80{ background-position: -102px -127px;}
+.exp-brow81{ background-position: -127px -127px;}
+.exp-brow82{ background-position: -152px -127px;}
+.exp-brow83{ background-position: -177px -127px;}
+.exp-brow84{ background-position: -202px -127px;}
+.exp-brow85{ background-position: -227px -127px;}
+.exp-brow86{ background-position: -252px -127px;}
+.exp-brow87{ background-position: -277px -127px;}
+.exp-brow88{ background-position: -302px -127px;}
+.exp-brow89{ background-position: -327px -127px;}
+.exp-brow90{ background-position: -352px -127px;}
+
+.exp-brow91{ background-position: -2px -152px;}
+.exp-brow92{ background-position: -27px -152px;}
+.exp-brow93{ background-position: -52px -152px;}
+.exp-brow94{ background-position: -77px -152px;}
+.exp-brow95{ background-position: -102px -152px;}
+.exp-brow96{ background-position: -127px -152px;}
+.exp-brow97{ background-position: -152px -152px;}
+.exp-brow98{ background-position: -177px -152px;}
+.exp-brow99{ background-position: -202px -152px;}
+.exp-brow100{ background-position: -227px -152px;}
+.exp-brow101{ background-position: -252px -152px;}
+.exp-brow102{ background-position: -277px -152px;}
+.exp-brow103{ background-position: -302px -152px;}
+.exp-brow104{ background-position: -327px -152px;}
+.exp-brow105{ background-position: -352px -152px;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<sql>
+    <userInfoSelf>
+        select id,removed,create_at,modify_at,login_name,product_id,user_name,user_url_param,user_url_param_time_stamp
+        from user_info_t where removed='N' and login_name='{%=loginName%}' and password='{%=password%}'
+    </userInfoSelf>
+    <userInfo>
+        select id,removed,create_at,modify_at,login_name,product_id,user_name,user_url_param,user_url_param_time_stamp
+        from user_info_t where removed='N' and user_url_param='{%=id%}'
+    </userInfo>
+    <counselorInfoList>
+        select
+        ci.id,ci.counselor_name,ci.product_id,ci.welcome_word,ci.age,ci.sex,ci.brief_introduction,ci.head_img_id,co.count,co.appointment_date
+        from counselor_info_t ci left join (select count(1) count,counselor_id,appointment_date from appointment_t where
+        user_id='{%=userId%}' and removed='N' and overdue='N' group by counselor_id ) co on ci.id=co.counselor_id
+        where ci.removed='N' and ci.product_id='{%=productId%}'
+    </counselorInfoList>
+    <couInfor>
+        select id,counselor_name,product_id,welcome_word,age,sex,brief_introduction,head_img_id
+        from counselor_info_t
+        where removed='N' and id='{%=id%}'
+    </couInfor>
+    <consultRecordCount>
+        select count(1) count
+        from consult_record_t cr left join counselor_info_t ci on cr.counselor_id=ci.id
+        where cr.removed='N' and cr.user_id='{%=userId%}'
+    </consultRecordCount>
+    <consultRecord>
+        select cr.id,cr.user_id,cr.counselor_id,cr.begin_at,cr.end_at,cr.consult_time,ci.counselor_name
+        from consult_record_t cr left join counselor_info_t ci on cr.counselor_id=ci.id
+        where cr.removed='N' and cr.user_id='{%=userId%}'
+        order by cr.begin_at desc
+        limit {%=startLine%},{%=pagesize%}
+    </consultRecord>
+    <oneConsultRecord>
+        select
+        cm.id,cm.create_at,cm.user_id,cm.counselor_id,cm.msg_text,cm.consult_record_id,cm.time_stamp,cm.send_people_id,cm.system_msg,ci.head_img_id
+        from chat_msg_t cm left join counselor_info_t ci on cm.counselor_id=ci.id
+        where cm.removed='N' and cm.consult_record_id='{%=consultRecordId%}'
+        order by cm.create_at asc
+    </oneConsultRecord>
+    <counselorAppointmentInfo>
+        select ci.id,ci.counselor_name,ci.appointment_max_num,ci.work_time_interval,co.count
+        from counselor_info_t ci left join (select count(1) count,counselor_id from appointment_t where
+        counselor_id='{%=counselorId%}' and removed='N' and overdue='N' group by counselor_id ) co on
+        ci.id=co.counselor_id
+        where ci.id='{%=counselorId%}' and ci.removed='N'
+    </counselorAppointmentInfo>
+    <appointment>
+        insert into appointment_t(id,user_id,counselor_id,create_at,modify_at,appointment_date)
+        value('{%=uid%}','{%=userId%}','{%=counselorId%}',now(),now(),'{%=appointmentDate%}')
+    </appointment>
+    <myAppointmentCount>
+        select count(1) count
+        from appointment_t ai left join counselor_info_t ci on ai.counselor_id=ci.id
+        where ai.user_id='{%=userId%}' and ai.removed='N'
+    </myAppointmentCount>
+    <myAppointmentList>
+        select
+        ai.id,ai.user_id,ai.counselor_id,ai.create_at,ai.appointment_date,ci.id,ci.counselor_name,ai.overdue,ai.modify_at
+        from appointment_t ai left join counselor_info_t ci on ai.counselor_id=ci.id
+        where ai.user_id='{%=userId%}' and ai.removed='N'
+        order by ai.create_at desc
+        limit {%=startLine%},{%=pagesize%}
+    </myAppointmentList>
+    <messageCount>
+        select count(1) count
+        from message_user_t mu left join message_counselor_t mc on mc.msg_user_id=mu.id
+        left join counselor_info_t c on c.id=mu.counselor_id
+        where mu.user_id='{%=userId%}' and mu.counselor_id='{%=counselorId%}' and mu.removed='N'
+    </messageCount>
+    <messageList>
+        select mu.id msg_user_id,mu.user_id,mu.counselor_id,mu.create_at msg_user_create_at,mu.message_text
+        user_message_text,
+        mc.id msg_counselor_id,mc.create_at msg_counselor_create_at,mc.message_text counselor_message_text,
+        c.counselor_name
+        from message_user_t mu left join message_counselor_t mc on mc.msg_user_id=mu.id
+        left join counselor_info_t c on c.id=mu.counselor_id
+        where mu.user_id='{%=userId%}' and mu.counselor_id='{%=counselorId%}' and mu.removed='N'
+        order by mu.create_at desc
+        limit {%=startLine%},{%=pagesize%}
+    </messageList>
+    <submitMessage>
+        insert into message_user_t(id,user_id,counselor_id,create_at,modify_at,message_text)
+        value('{%=uid%}','{%=userId%}','{%=counselorId%}',now(),now(),'{%=message_text%}')
+    </submitMessage>
+    <messageUserCount>
+        select count(1) count
+        from message_user_t mu left join message_counselor_t mc on mc.msg_user_id=mu.id
+        left join counselor_info_t c on c.id=mu.counselor_id
+        where mu.user_id='{%=userId%}' and mu.removed='N'
+    </messageUserCount>
+    <messageUserList>
+        select mu.id msg_user_id,mu.user_id,mu.counselor_id,mu.create_at msg_user_create_at,mu.message_text
+        user_message_text,
+        mc.id msg_counselor_id,mc.create_at msg_counselor_create_at,mc.message_text counselor_message_text,
+        c.counselor_name
+        from message_user_t mu left join message_counselor_t mc on mc.msg_user_id=mu.id
+        left join counselor_info_t c on c.id=mu.counselor_id
+        where mu.user_id='{%=userId%}' and mu.removed='N'
+        order by mu.create_at desc
+        limit {%=startLine%},{%=pagesize%}
+    </messageUserList>
+</sql>

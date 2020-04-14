@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>心理咨询平台</title>
+<link href="/counselor/css/consult-base.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="/util/js/jquery.min.js"></script>
+</head>
+
+<body>
+	<div class="login-all">
+		<div class="login-logo">
+        	<img class="hospital-logo" src="images/logo.png"/>
+			<img src="images/describe-worf.png"/>
+		</div>
+		<div class="login-center">
+        	<div class="login-left">
+            	<img src="images/login-img.png"/>
+            </div>
+			<form id="form">
+				<div class="login-right">
+					<!--<div class="login_error">用户名不能为空</div>-->
+					<div class="user-text">
+						<span class="user-icon"></span>
+						<input type="text" name="loginName" placeholder="请输入用户名"/>
+					</div>
+					<div class="user-text">
+						<span class="password-icon"></span>
+						<input type="password" name="password" placeholder="请输入密码"/>
+					</div>
+					<a href="javascript:login();" class="login-button">登录</a>
+				</div>
+			</form>
+		</div><!--login-center-->	  
+		<div class="zy-foot">
+			<p>PEM心理健康管理系统&nbsp;&nbsp;&nbsp;&nbsp;版权所有：中盛凯新©2009-<%=now%></p>
+		</div>
+		<div class="alert_word">
+			<h1>温馨提示</h1>
+			<div class="alert_layer_center">
+				<p>您的浏览器为：<span id="osInfo"></span>，如果不能正常使用，请下载Chrome浏览器进行使用。</p>
+				<p>点击下载：<a href="/resource/Chrome.exe" class="guge">谷歌浏览器</a>
+				</p>
+			</div>
+		</div>
+	</div><!--login_all-->
+
+<script type="text/javascript">
+	function getOs(){
+		var Sys = {};
+		var ua = navigator.userAgent.toLowerCase();
+		var s;
+		(s = ua.match(/msie ([\d.]+)/)) ? Sys.ie = s[1] :
+				(s = ua.match(/firefox\/([\d.]+)/)) ? Sys.firefox = s[1] :
+						(s = ua.match(/chrome\/([\d.]+)/)) ? Sys.chrome = s[1] :
+								(s = ua.match(/opera.([\d.]+)/)) ? Sys.opera = s[1] :
+										(s = ua.match(/version\/([\d.]+).*safari/)) ? Sys.safari = s[1] : 0;
+		//以下进行测试
+		try{
+			if (Sys.ie)  return 'IE: ' + Sys.ie;
+			var ie = ((/msie/.test(ua)||/trident/.test(ua)) && !/opera/.test(ua));
+			if(ie){return 'IE:11内核'}
+			if (Sys.firefox) return 'Firefox: ' + Sys.firefox;
+			if (Sys.chrome) return 'Chrome: ' + Sys.chrome;
+			if (Sys.opera) return 'Opera: ' + Sys.opera;
+			if (Sys.safari) return 'Safari: ' + Sys.safari;
+		}catch(e){alert("360")}
+	}
+
+	$(function(){
+		$("#osInfo").html(getOs());
+	})
+
+	function login(){
+		var form=$('#form');
+		$.ajax({
+			async: false,
+			url:'/counselor/login',
+			type:'post',
+			data:form.serialize(),
+			dataType:'json',
+			success:function(data){
+				if(data.code==0){
+					location.href='/counselor/home';
+				}else{
+					alert('用户名或密码错误！');
+				}
+			}
+		});
+	}
+
+	document.onkeydown = function(evt){
+		var evt = window.event?window.event:evt;
+		var type = $("#testcenter").val() ;
+		if(evt.keyCode==13){
+			login();
+		}
+	}
+</script>
+</body>
+</html>

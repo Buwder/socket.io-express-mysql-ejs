@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>心理咨询平台</title>
+    <link href="/user/css/user.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/util/js/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $("#message_list").addClass("menu-active");
+        })
+    </script>
+</head>
+<body>
+<%include header.html%>
+
+<div class="message-modular">
+    <div class="message-title">
+        <h1><span>咨询留言</span></h1>
+    </div><!--message-title-->
+    <div class="message-list">
+        <% for(var index in messageList){ %>
+        <div class="message-one">
+            <div class="message-question">
+                <span class="question-title">咨询内容：</span>
+                <p class="question-text"><%-messageList[index].user_message_text%></p>
+                <span class="question-time"><%=messageList[index].msg_user_create_at%></span>
+            </div><!--message-question-->
+            <div class="message-question message-answer">
+                <span class="question-title"><%=messageList[index].counselor_name%>回复：</span>
+                <p class="question-text"><%-messageList[index].counselor_message_text%></p>
+                <span class="question-time"><%=messageList[index].msg_counselor_create_at%></span>
+            </div><!--message-answer-->
+        </div><!--message-one-->
+        <% } %>
+    </div><!--message-list-->
+
+    <div class="page_all">
+        <div class="page">
+            <ul>
+                <li>
+                    <a href="/user/message_list?curentpage=<%=parseInt(page.curentpage)-1%>"><span class="arrow_left"></span></a>
+                </li>
+                <% for(var index=0;index<page.pageNumber;index++){ %>
+                <li <% if(page.curentpage==index){ %>class="page_active"<% } %> >
+                <a href="/user/message_list?curentpage=<%=index%>"><%=index+1%></a>
+                </li>
+                <% } %>
+                <li>
+                    <a href="/user/message_list?curentpage=<%=parseInt(page.curentpage)+1%>"><span class="arrow_right"></span></a>
+                </li>
+                <div class="clr"></div>
+            </ul>
+        </div>
+        <div class="clr"></div>
+    </div><!--page-all-->
+
+</div><!--chat-modular-->
+
+<%include footer.html%>
+</body>
+</html>

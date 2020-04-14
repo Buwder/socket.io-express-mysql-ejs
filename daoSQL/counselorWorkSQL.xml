@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<sql>
+    <addbeiwang>
+        update consult_record_t set main_problem='{%=zywt%}',measure='{%=jjcs%}' where id='{%=id%}'
+    </addbeiwang>
+    <selbeiwang>
+        select main_problem,measure from consult_record_t where id ='{%=id%}'
+    </selbeiwang>
+    <counselorInfor>
+        select id,counselor_name,head_img_id,brief_introduction
+        from counselor_info_t where removed='N' and id='{%=counselorId%}'
+    </counselorInfor>
+    <counselorRecordListCount>
+        select count(1) count
+        from consult_record_t cr left join user_info_t ui on cr.user_id=ui.id
+        where cr.removed='N' and cr.counselor_id='{%=counselorId%}'
+    </counselorRecordListCount>
+    <counselorRecordList>
+        select cr.id,cr.user_id,cr.counselor_id,cr.begin_at,cr.end_at,cr.consult_time,ui.user_name
+        from consult_record_t cr left join user_info_t ui on cr.user_id=ui.id
+        where cr.removed='N' and cr.counselor_id='{%=counselorId%}'
+        order by cr.begin_at desc
+        limit {%=startLine%},{%=pagesize%}
+    </counselorRecordList>
+    <oneConsultantRecord>
+        select
+        cm.id,cm.create_at,cm.user_id,cm.counselor_id,cm.msg_text,cm.consult_record_id,cm.time_stamp,cm.send_people_id,cm.system_msg,ci.head_img_id
+        from chat_msg_t cm left join counselor_info_t ci on cm.counselor_id=ci.id
+        where cm.removed='N' and cm.consult_record_id='{%=consultRecordId%}'
+        order by cm.create_at asc
+    </oneConsultantRecord>
+    <bookManageListCount>
+        select count(1) count
+        from (select date_format(appointment_date,'%Y-%m-%d') appointment_date,counselor_id,count(1) appointment_number
+        from appointment_t
+        where counselor_id='{%=counselorId%}' and removed='N'
+        group by date_format(appointment_date,'%Y-%m-%d')
+        ) a
+        left join counselor_info_t ci on ci.id=a.counselor_id
+        left join (
+        select date_format(create_at,'%Y-%m-%d') create_at,count(1) keep_number
+        from consult_record_t
+        where counselor_id='{%=counselorId%}' and removed='N'
+        group by date_format(create_at,'%Y-%m-%d')
+        ) b on b.create_at=a.appointment_date
+    </bookManageListCount>
+    <bookManageList>
+        select a.appointment_date,ci.appointment_max_num,a.appointment_number,b.keep_number
+        from (select date_format(appointment_date,'%Y-%m-%d') appointment_date,counselor_id,count(1) appointment_number
+        from appointment_t
+        where counselor_id='{%=counselorId%}' and removed='N'
+        group by date_format(appointment_date,'%Y-%m-%d')
+        ) a
+        left join counselor_info_t ci on ci.id=a.counselor_id
+        left join (
+        select date_format(create_at,'%Y-%m-%d') create_at,count(1) keep_number
+        from consult_record_t
+        where counselor_id='{%=counselorId%}' and removed='N'
+        group by date_format(create_at,'%Y-%m-%d')
+        ) b on b.create_at=a.appointment_date
+        order by a.appointment_date desc
+        limit {%=startLine%},{%=pagesize%}
+    </bookManageList>
+    <findBookInfo>
+        select appointment_max_num,work_time_interval from counselor_info_t where id='{%=counselorId%}' ,
+        updateBookInfo:update counselor_info_t set
+        appointment_max_num='{%=appointment_max_num%}',work_time_interval='{%=work_time_interval%}' where
+        id='{%=counselorId%}'
+    </findBookInfo>
+    <updateEditInfor>
+        update counselor_info_t set
+        head_img_id='{%=head_img_id%}',counselor_name='{%=counselor_name%}',brief_introduction='{%=brief_introduction%}'
+        where id='{%=counselorId%}'
+    </updateEditInfor>
+    <messageListCount>
+        select count(1) count
+        from message_user_t mu left join message_counselor_t mc on mc.msg_user_id=mu.id
+        left join user_info_t u on u.id=mu.user_id
+        where mu.counselor_id='{%=counselorId%}' and mu.removed='N'
+    </messageListCount>
+    <messageList>
+        select mu.id msg_user_id,mu.user_id,mu.counselor_id,mu.create_at msg_user_create_at,mu.message_text
+        user_message_text,
+        mc.id msg_counselor_id,mc.create_at msg_counselor_create_at,mc.message_text counselor_message_text,
+        u.user_name
+        from message_user_t mu left join message_counselor_t mc on mc.msg_user_id=mu.id
+        left join user_info_t u on u.id=mu.user_id
+        where mu.counselor_id='{%=counselorId%}' and mu.removed='N'
+        order by mu.create_at desc
+        limit {%=startLine%},{%=pagesize%}
+    </messageList>
+    <submitMessage>
+        insert into message_counselor_t(id,user_id,counselor_id,create_at,modify_at,msg_user_id,message_text)
+        value('{%=uid%}','{%=userId%}','{%=counselorId%}',now(),now(),'{%=msg_user_id%}','{%=message_text%}')
+    </submitMessage>
+</sql>

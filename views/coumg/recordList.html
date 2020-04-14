@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>心理咨询平台</title>
+    <link href="/coumg/css/consult-mp.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/util/js/jquery.min.js"></script>
+    <script type="text/javascript">
+        <!-- 退出平台-->
+        function loginOut(){
+            location.href="/coumg/loginOut";
+        }
+    </script>
+</head>
+<body>
+    <div class="top-infor">
+        <div class="top-infor-link">
+            <a href="javascript:loginOut();" class="logout">退出平台</a>
+            <span>欢迎您：<%=admin.adminName%></span>
+        </div>
+    </div><!--top_infor-->
+    <div class="heard-all">
+        <div class="heard-index">
+            <ul class="menu">
+                <li>
+                    <a href="#">
+                        <span class="consul-icon"></span>
+                        <p><%=admin.adminName%></p>
+                    </a>
+                </li>
+            </ul>
+
+            <a class="home-logo" href="/coumg/counselor">
+                <img src="/coumg/images/logo.png" />
+            </a>
+        </div>
+    </div><!--heard-all-->
+
+    <div class="consultant-all">
+        <div class="consultant-top">
+            <h1><%=counselorInfo.counselor_name%>--咨询记录</h1>
+        </div><!--consultant-top-->
+        <div class="consultant-center">
+            <table class="consultant-list" border="0" cellspacing="0" cellpadding="0">
+                <thead>
+                <tr>
+                    <th>开始时间</th>
+                    <th>时长</th>
+                    <th>咨询者</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% for(var index in recordList){ %>
+                    <tr>
+                        <td><%=recordList[index].begin_at%></td>
+                        <td><%=recordList[index].consult_time%></td>
+                        <td><%=recordList[index].user_name%></td>
+                        <td>
+                            <a href="/coumg/recordDetail?counselorId=<%=counselorInfo.id%>&consultRecordId=<%=recordList[index].id%>">查看</a>
+                        </td>
+                    </tr>
+                <% } %>
+                </tbody>
+            </table>
+
+            <div class="page-all">
+                <div class="page">
+                    <ul>
+                        <li>
+                            <a href="/coumg/recordList?counselorId=<%=counselorInfo.id%>&curentpage=<%=parseInt(page.curentpage)-1%>"><span class="arrow_left"></span></a>
+                        </li>
+                        <% for(var index=0;index<page.pageNumber;index++){ %>
+                        <li <% if(page.curentpage==index){ %>class="page_active"<% } %> >
+                        <a href="/coumg/recordList?counselorId=<%=counselorInfo.id%>&curentpage=<%=index%>"><%=index+1%></a>
+                        </li>
+                        <% } %>
+                        <li>
+                            <a href="/coumg/recordList?counselorId=<%=counselorInfo.id%>&curentpage=<%=parseInt(page.curentpage)+1%>"><span class="arrow_right"></span></a>
+                        </li>
+                        <div class="clr"></div>
+                    </ul>
+                </div>
+                <div class="clr"></div>
+            </div><!--page-all-->
+
+        </div><!--consultant-list-->
+    </div><!--consultant-all-->
+
+    <div class="foot">
+        <p>Copyright (C) 中盛凯新企业集团版权所有</p>
+    </div>
+</body>
+</html>

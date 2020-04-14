@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<sql>
+    <counselorInfo>
+        select id,removed,create_at,modify_at,login_name,product_id,counselor_name
+        from counselor_info_t where removed='N' and login_name='{%=loginName%}' and password='{%=password%}'
+    </counselorInfo>
+</sql>

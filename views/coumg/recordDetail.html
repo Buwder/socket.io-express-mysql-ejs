@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>心理咨询平台</title>
+    <link href="/coumg/css/consult-mp.css" rel="stylesheet" type="text/css">
+    <link href="/util/css/expression.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/util/js/jquery.min.js"></script>
+    <script type="text/javascript">
+        <!-- 退出平台-->
+        function loginOut(){
+            location.href="/coumg/loginOut";
+        }
+    </script>
+</head>
+<body>
+    <div class="top-infor">
+        <div class="top-infor-link">
+            <a href="javascript:loginOut();" class="logout">退出平台</a>
+            <span>欢迎您：<%=admin.adminName%></span>
+        </div>
+    </div><!--top_infor-->
+    <div class="heard-all">
+        <div class="heard-index">
+            <ul class="menu">
+                <li>
+                    <a href="#">
+                        <span class="consul-icon"></span>
+                        <p><%=admin.adminName%></p>
+                    </a>
+                </li>
+            </ul>
+
+            <a class="home-logo" href="/coumg/counselor">
+                <img src="/coumg/images/logo.png" />
+            </a>
+        </div>
+    </div><!--heard-all-->
+
+    <div class="consultant-all">
+        <div class="consultant-top">
+            <h1><%=counselorInfo.counselor_name%>--咨询记录详情</h1>
+        </div><!--consultant-top-->
+
+        <div class="record-index">
+            <div class="chat-index-inall">
+
+                <% for(var index in recordDetail){ %>
+                    <% if(recordDetail[index].system_msg=='N'){ %>
+                        <% if(counselorInfo.id!=recordDetail[index].send_people_id){ %>
+                            <div class="chat-one">
+                                <div class="chat-consult">
+                                    <div class="chat-consult-img">
+                                        <img src="images/img-two.jpg" />
+                                    </div>
+                                    <div class="chat-consult-infor">
+                                        <span class="arrow-one"></span>
+                                        <div class="chat-scope"><%-recordDetail[index].msg_text%></div>
+                                    </div>
+                                </div><!--chat-consult-->
+                            </div><!--chat-one-->
+                        <% }else{ %>
+                            <div class="chat-two">
+                                <div class="chat-consult">
+                                    <div class="chat-user-img">
+                                        <img src="/coumg/showIMGdata?imgId=<%=counselorInfo.head_img_id%>" />
+                                    </div>
+                                    <div class="chat-user-infor">
+                                        <span class="arrow-two"></span>
+                                        <div class="user-scope"><%-recordDetail[index].msg_text%></div>
+                                    </div>
+                                </div><!--chat-consult-->
+                            </div><!--chat-two-->
+                        <% } %>
+                    <% } %>
+                <% } %>
+
+
+            </div><!--chat-index-inall-->
+        </div><!--record-index-->
+
+    </div><!--consultant-all-->
+
+    <div class="foot">
+        <p>Copyright (C) 中盛凯新企业集团版权所有</p>
+    </div>
+</body>
+</html>

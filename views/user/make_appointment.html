@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>心理咨询平台</title>
+    <link href="/user/css/user.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/util/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/util/js/jquery.tmpl.min.js"></script>
+    <script type="text/javascript">
+        var date=new Date();
+        var day=date.getDay();
+        var weekDay=['星期日','星期一','星期二','星期三','星期四','星期五','星期六'];
+        var wSet=0;
+        //生成日期选项卡
+        function weekSetting(noNow){
+            $('#time_list').empty();
+            for(var i=0;i<7;i++){
+                var week=new Date(date.getFullYear(),date.getMonth(),date.getDate()-date.getDay()+(wSet*7)+i);
+                var json={
+                    dateStr:(week.getMonth()+1)+'-'+week.getDate(),
+                    dayStr:weekDay[i],
+                    index:i,
+                    dateYMD:week.getFullYear()+"-"+(week.getMonth()+1)+"-"+week.getDate()
+                };
+                if(noNow && day==week.getDay()){
+                    json["weekDay"]=true;
+                }else{
+                    json["weekDay"]=false;
+                }
+                $("#time_list-tmpl").tmpl(json).appendTo($('#time_list'));
+            }
+        }
+        $(function(){
+            $("#header_consultant_list").addClass("menu-active");
+            //生成日期选项卡
+            weekSetting('noNow');
+        })
+        function timePrevious(){
+            wSet--;
+            weekSetting();
+        }
+        function timeNext(){
+            wSet++;
+            weekSetting();
+        }
+        function selectThisDate(ts){
+            var value=$(ts).attr("data-value");
+            console.log(value);
+            value=value.split("-");
+            if(value[0]<date.getFullYear() || value[1]<(date.getMonth()+1) || value[2]<date.getDate()){
+                alert("所选日期不得晚于今天！");
+                return false;
+            }
+
+            $("#time_list").children("li").each(function(){
+                $(this).removeClass("time-active");
+            });
+            $(ts).addClass("time-active");
+        }
+        /*预约*/
+        function appointment(){
+            var appointmentDate=$("#time_list").children(".time-active").attr("data-time");
+            //检验
+            if($("#phoneNumber").val()==''){
+                alert("手机号不能为空！");
+                return false;
+            }
+
+            $.ajax({
+                async: false,
+                url:'/user/appointment',
+                type:'post',
+                dataType:'json',
+                data:{
+                    appointmentDate:appointmentDate,
+                    counselorId:'<%=appointmentInfo.id%>'
+                },
+                success:function(data){
+                    if(data.code=='0'){
+                        alert("预约成功！");
+                        window.location.href="/user/consultant_list";
+                    }else{
+                        alert("预约失败！");
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+<%include header.html%>
+
+<div class="message-modular">
+    <div class="message-title">
+        <a class="return-icon" href="/user/consultant_list">返回</a>
+        <h1><span>咨询预约</span></h1>
+    </div><!--message-title-->
+    <div class="chose-time">
+        <label>选择时间：</label>
+        <div class="time-list">
+            <a class="time-previous" href="javascript:timePrevious()"></a>
+            <ul id="time_list">
+            </ul>
+            <script type="text/zskx-tmpl" id="time_list-tmpl">
+                <li {{if weekDay}}class="time-active"{{/if}} data-value="${dateYMD}" data-time="${dateYMD}" id="appointment_date_${index}" onclick="selectThisDate(this)">
+                     <p>${dateStr} ${dayStr}</p>
+                     <p class="specific-time"><%=appointmentInfo.work_time_interval%></p>
+                 </li>
+             </script>
+            <a class="time-next" href="javascript:timeNext()"></a>
+        </div><!--time-list-->
+    </div><!--chose-time-->
+    <div class="appoint-one">
+        <label>手机号码：</label>
+        <input type="text" id="phoneNumber"/>
+    </div><!--appoint-one-->
+    <div class="appoint-one">
+        <label>最多预约：</label>
+        <span><%=appointmentInfo.appointment_max_num%>个</span>
+    </div><!--appoint-one-->
+    <div class="appoint-one">
+        <label>已经预约：</label>
+        <span><%=appointmentInfo.count%>个</span>
+    </div><!--appoint-one-->
+    <div class="appoint-btn">
+        <a <%if(appointmentInfo.appointment_max_num<=appointmentInfo.count){%>class="appoint-btn-disabled"<%}%> href="javascript:<%if(appointmentInfo.appointment_max_num>appointmentInfo.count){%>appointment()<%}else{%>void(0)<%}%>">我要预约</a>
+    </div>
+</div><!--chat-modular-->
+
+<%include footer.html%>
+</body>
+</html>

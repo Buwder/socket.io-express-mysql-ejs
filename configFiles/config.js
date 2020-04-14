@@ -1,0 +1,18 @@
+/*数据库配置*/
+exports.mysqlConfig={
+    host:'192.168.0.27',
+    user:'root',
+    password:'123456',
+    database:'pem_chat2',
+    port:3306
+}
+/*其他配置*/
+exports.otherConfig={
+    host:'192.168.0.164',
+    port:'3000'
+}
+/*退出页面配置*/
+exports.loginOutConfig={
+    user:'',
+    coumg:""
+}

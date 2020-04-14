@@ -1,0 +1,36 @@
+<div class="alert_word">
+    <p class="copyright-text">Copyright (C) 中盛凯新企业集团版权所有</p>
+    <h1>温馨提示</h1>
+    <div class="alert_layer_center">
+        <p>您的浏览器为：<span id="osInfo"></span>，如果不能正常使用，请下载Chrome浏览器进行使用。</p>
+        <p>点击下载：<a href="/resource/Chrome.exe" class="guge">谷歌浏览器</a>
+        </p>
+    </div>
+</div><!--alert_word-->
+
+<script type="text/javascript">
+    function getOs(){
+        var Sys = {};
+        var ua = navigator.userAgent.toLowerCase();
+        var s;
+        (s = ua.match(/msie ([\d.]+)/)) ? Sys.ie = s[1] :
+                (s = ua.match(/firefox\/([\d.]+)/)) ? Sys.firefox = s[1] :
+                        (s = ua.match(/chrome\/([\d.]+)/)) ? Sys.chrome = s[1] :
+                                (s = ua.match(/opera.([\d.]+)/)) ? Sys.opera = s[1] :
+                                        (s = ua.match(/version\/([\d.]+).*safari/)) ? Sys.safari = s[1] : 0;
+        //以下进行测试
+        try{
+            if (Sys.ie)  return 'IE: ' + Sys.ie;
+            var ie = ((/msie/.test(ua)||/trident/.test(ua)) && !/opera/.test(ua));
+            if(ie){return 'IE:11内核'}
+            if (Sys.firefox) return 'Firefox: ' + Sys.firefox;
+            if (Sys.chrome) return 'Chrome: ' + Sys.chrome;
+            if (Sys.opera) return 'Opera: ' + Sys.opera;
+            if (Sys.safari) return 'Safari: ' + Sys.safari;
+        }catch(e){alert("360")}
+    }
+
+    $(function(){
+        $("#osInfo").html(getOs());
+    })
+</script>

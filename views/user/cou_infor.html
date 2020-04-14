@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>心理咨询平台</title>
+    <link href="/user/css/user.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="/util/js/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $("#header_consultant_list").addClass("menu-active");
+        })
+    </script>
+</head>
+<body>
+    <%include header.html%>
+
+    <div class="message-modular">
+        <div class="message-title">
+            <a class="return-icon" href="/user/consultant_list">返回</a>
+            <h1><span>咨询师资料</span></h1>
+        </div><!--message-title-->
+        <div class="view-all">
+            <div class="view-img">
+                <img src="/coumg/showIMGdata?imgId=<%=couInfor.head_img_id%>" />
+            </div><!--view-img-->
+            <div class="view-one">
+                <label>姓名：</label>
+                <span><%=couInfor.counselor_name%></span>
+            </div><!--view-one-->
+            <div class="view-one">
+                <label>性别：</label>
+                <span><%=couInfor.sex=='MALE'?'男':'女' %></span>
+            </div><!--view-one-->
+            <div class="view-one">
+                <label>年龄：</label>
+                <span><%=couInfor.age%></span>
+            </div><!--view-one-->
+            <div class="view-one">
+                <label>咨询次数：</label>
+                <span>10次</span>
+            </div><!--view-one-->
+            <div class="view-one">
+                <label>简介：</label>
+                    <span><%=couInfor.brief_introduction%></span>
+            </div><!--view-one-->
+        </div><!--view-all-->
+    </div><!--chat-modular-->
+
+    <%include footer.html%>
+</body>
+</html>
