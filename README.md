@@ -1,11 +1,11 @@
 ﻿# socket.io-express-mysql-ejs
 
-npm install
+#npm install
 
-npm start
+#npm start
 
-user--localhost:5830/user
+#user--localhost:5830/user
 
-counselor--localhost:5830/counselor
+#counselor--localhost:5830/counselor
 
-coumg--localhost:5830/coumg
+#coumg--localhost:5830/coumg
